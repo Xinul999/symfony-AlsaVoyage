@@ -21,6 +21,7 @@ class Commentaire
     private ?string $contenu = null;
 
     #[ORM\ManyToOne(inversedBy: 'commentaires')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $auteur = null;
 
     #[ORM\Column]
