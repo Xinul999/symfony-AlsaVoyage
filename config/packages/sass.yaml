@@ -1,4 +1,3 @@
-sass:
-    sources:
-        - source: '%kernel.project_dir%/assets/styles'
-          target: '%kernel.project_dir%/var/sass'
+symfonycasts_sass:
+    root_sass: '%kernel.project_dir%/assets/styles/app.scss'
+    binary: 'sass'
