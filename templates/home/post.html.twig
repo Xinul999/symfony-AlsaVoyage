@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des articles{% endblock %}
+
+{% block body %}
+    <section class="article">
+        <h1>{{ post.titre }}</h1>
+        <p>Article de : <b>{{ post.auteur.username }}</b></p>
+        <p>{{ post.contenu }}</p>
+        <div class="commentaires">
+            <h2>Commentaires</h2>
+            {% for post in posts %}
+            <li>
+                <article id='{{ post.id }}'>
+                    <h2>{{ post.titre }}</h2>
+                    <p>{{ post.contenu }}</p>
+                    <p>
+                        <time datetime="{{ post.dateHeureCreation ? post.dateHeureCreation|date('Y-m-d H:i:s') : ''}}"> {{ post.dateHeureCreation ? post.dateHeureCreation|date('D d M Y') : ''}}</time>
+                    </p>
+                    <a href="{{ path('app_postList_show', {'id': post.id}) }}">Lire l'article en entier</a>
+                </article>
+            </li>
+            {% else %}
+            <li><h2>Pas d'articles enregistrés</h2></li>
+            {% endfor %}
+        </div>
+    </section>
+
+    <p>{{ dump(post) }}</p>
+
+
+{% endblock %}
