@@ -3,8 +3,27 @@
 {% block title %}Accueil - Blog de Bob le voyageur{% endblock %}
 
 {%  block body %}
-    <div>
+    <div class="px-5">
         <h1 class="text-center text-black opacity-75">Blog de Bob le voyageur</h1>
+
+        <div class="slider">
+            <article class="perspective">
+                <div class="left-side">
+                    <img class="img-fluid" src="{{ asset('images/placeholder.png') }}" width="640" height="360" alt="Image de l'article">
+                </div>
+            </article>
+            <article class="perspective">
+                <div class="middle-side">
+                    <img class="img-fluid" src="{{ asset('images/placeholder.png') }}" width="640" height="360" alt="Image de l'article">
+                </div>
+            </article>
+            <article class="perspective">
+                <div class="right-side">
+                    <img class="img-fluid" src="{{ asset('images/placeholder.png') }}" width="640" height="360" alt="Image de l'article">
+                </div>
+            </article>
+        </div>
+
     </div>
 {% endblock %}
 

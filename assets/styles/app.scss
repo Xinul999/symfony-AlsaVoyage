@@ -15,3 +15,77 @@
 }
 
 
+.perspective{
+    perspective: 1000px;
+    --size: 640px;
+    & div{
+        opacity: 1;
+        transition: opacity 2.5s ease-in-out;
+    }
+
+    .left-side{
+        transform-style: preserve-3d;
+        transform: rotateY(20deg);
+        transition: transform 0.5s ease-out;
+        cursor: pointer;
+    }
+
+    .left-side:hover{
+        transform: rotateY(0) translateX(calc(50vw - var(--size)/2)) scale(1.5);
+    }
+
+
+    .middle-side{
+        transform-style: preserve-3d;
+        transition: transform 0.5s ease-out;
+        cursor: pointer;
+        transform: translateZ(-110px);
+    }
+    .middle-side:hover{
+        transform: translateZ(0) scale(1.5);
+    }
+
+
+    .right-side{
+        transform-style: preserve-3d;
+        transform: rotateY(-20deg);
+        transition: transform 0.5s ease-out;
+        cursor: pointer;
+    }
+
+    .right-side:hover{
+        transform: rotateY(0) translateX(calc(-50vw + var(--size)/2)) scale(1.5);
+    }
+
+}
+
+.slider {
+    display: flex;
+    gap: 1rem;
+
+    &:has(.left-side:hover) {
+        .middle-side,
+        .right-side {
+            opacity: 0;
+            transition-duration: 0.4s;
+            transition-delay: 0s;
+        }
+    }
+
+    &:has(.middle-side:hover) {
+        .left-side,
+        .right-side {
+            opacity: 0;
+            transition-duration: 0.4s;
+            transition-delay: 0s;
+        }
+    }
+    &:has(.right-side:hover) {
+        .left-side,
+        .middle-side {
+            opacity: 0;
+            transition-duration: 0.4s;
+            transition-delay: 0s;
+        }
+    }
+}
