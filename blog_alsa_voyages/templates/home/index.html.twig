@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog Alsa Voyages{% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{{ path('home') }}">Alsa Voyages</a>
+  <!-- ajoute tes liens ici -->
+</nav>
+
+<section class="hero">
+  <img src="{{ asset('images/hero.jpg') }}" alt="Voyage" class="img-fluid w-100">
+  <h1 class="display-4 position-absolute top-50 start-50 translate-middle text-white">Blog Alsa Voyages</h1>
+</section>
+
+<div class="container my-5">
+  <h2>Derniers articles</h2>
+  <div class="row">
+    {% for article in articles %}
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">{{ article.title }}</h5>
+            <p class="card-text">{{ article.content[:100] ~ '…' }}</p>
+            <a href="{{ path('app_article_show', {'id': article.id}) }}">Lire la suite</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
