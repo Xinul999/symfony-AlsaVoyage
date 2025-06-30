@@ -7,3 +7,55 @@ import './bootstrap.js';
  */
 import './styles/app.scss';
 
+document.addEventListener('DOMContentLoaded', () => {
+
+    const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+            const width = entry.borderBoxSize[0].inlineSize;
+            if(width <= 1920 && width >= 1051){
+                screenSize(width);
+            }
+        }
+    });
+    // Body or HTML but not css margin padding ... just full screen!!
+    resizeObserver.observe(document.querySelector('body'), {box: 'border-box'});
+});
+
+const screenSize = width => {
+    console.log(`Width screeSize: ${width}px`);
+    const sizeInfo = sizeInformation(width);
+    updateDimensions(sizeInfo);
+}
+
+const updateDimensions = informationBreadPoint => {
+    const images = document.querySelectorAll('.perspective img');
+
+    images.forEach(img => {
+        const parent = img.closest(".perspective");
+        parent.style.setProperty('--img-width', `${informationBreadPoint.imgWidth}px`);
+        parent.style.setProperty('--img-height', `${informationBreadPoint.imgHeight}px`);
+        parent.style.setProperty('--scale-x', `${informationBreadPoint.scaleX}`);
+        parent.style.setProperty('--scale-y', `${informationBreadPoint.scaleY}`);
+    });
+}
+const sizeInformation = width => {
+    const breakPointsInfo = [
+        {width: 1920, imgWidth: 620, imgHeight: 465, scaleX: 2.9, scaleY: 1.5},
+        {width: 1800, imgWidth: 568, imgHeight: 426, scaleX: 2.73, scaleY: 1.43},
+        {width: 1600, imgWidth: 517, imgHeight: 388, scaleX: 2.55, scaleY: 1.35},
+        {width: 1440, imgWidth: 465, imgHeight: 349, scaleX: 2.38, scaleY: 1.28},
+        {width: 1280, imgWidth: 413, imgHeight: 310, scaleX: 2.2, scaleY: 1.2},
+        {width: 1150, imgWidth: 356, imgHeight: 267, scaleX: 2.0, scaleY: 1.1},
+        {width: 1024, imgWidth: 334, imgHeight: 251, scaleX: 2.0, scaleY: 1.1},
+        {width: 960, imgWidth: 334, imgHeight: 251, scaleX: 1.92, scaleY: 1.06},
+        {width: 768, imgWidth: 300, imgHeight: 225, scaleX: 1.8, scaleY: 1.0},
+        {width: 640, imgWidth: 275, imgHeight: 197, scaleX: 1.7, scaleY: 0.95},
+        {width: 576, imgWidth: 262, imgHeight: 183, scaleX: 1.65, scaleY: 0.925},
+        {width: 480, imgWidth: 250, imgHeight: 169, scaleX: 1.6, scaleY: 0.9}
+    ];
+    const breakPoint = breakPointsInfo.find(bp => bp.width <= width);
+    console.log(breakPoint);
+    return breakPoint;
+}
+
+

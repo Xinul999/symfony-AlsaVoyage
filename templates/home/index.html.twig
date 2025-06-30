@@ -3,27 +3,29 @@
 {% block title %}Accueil - Blog de Bob le voyageur{% endblock %}
 
 {%  block body %}
-    <div class="px-5">
         <h1 class="text-center text-black opacity-75">Blog de Bob le voyageur</h1>
-
         <div class="slider">
             <article class="perspective">
                 <div class="left-side">
-                    <img class="img-fluid" src="{{ asset('images/placeholder.png') }}" width="640" height="360" alt="Image de l'article">
+                    <a href="#">
+                        <img src="{{ asset('images/italie.jpg') }}" width="620" height="465" alt="Image de l'italie présentant le reste de ">
+                    </a>
                 </div>
             </article>
             <article class="perspective">
                 <div class="middle-side">
-                    <img class="img-fluid" src="{{ asset('images/placeholder.png') }}" width="640" height="360" alt="Image de l'article">
+                    <a href="#">
+                        <img src="{{ asset('images/japon.jpg') }}" width="620" height="465" alt="Image de l'article">
+                    </a>
                 </div>
             </article>
             <article class="perspective">
                 <div class="right-side">
-                    <img class="img-fluid" src="{{ asset('images/placeholder.png') }}" width="640" height="360" alt="Image de l'article">
+                    <a href="#">
+                        <img src="{{ asset('images/sicile.jpg') }}" width="620" height="465" alt="Payase de la sicile">
+                    </a>
                 </div>
             </article>
         </div>
-
-    </div>
 {% endblock %}
 

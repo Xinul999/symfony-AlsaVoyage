@@ -1,3 +1,9 @@
+// Variables pour votre slider
+$slider-perspective: 1000px;
+$slider-transition-time: 0.5s;
+$margin-inline: 30px;
+$header-size: 10px;
+
 *,::before,::after{
     box-sizing: border-box;
     margin: 0;
@@ -14,61 +20,18 @@
     z-index: -1;
 }
 
-
-.perspective{
-    perspective: 1000px;
-    --size: 640px;
-    & div{
-        opacity: 1;
-        transition: opacity 2.5s ease-in-out;
-    }
-
-    .left-side{
-        transform-style: preserve-3d;
-        transform: rotateY(20deg);
-        transition: transform 0.5s ease-out;
-        cursor: pointer;
-    }
-
-    .left-side:hover{
-        transform: rotateY(0) translateX(calc(50vw - var(--size)/2)) scale(1.5);
-    }
-
-
-    .middle-side{
-        transform-style: preserve-3d;
-        transition: transform 0.5s ease-out;
-        cursor: pointer;
-        transform: translateZ(-110px);
-    }
-    .middle-side:hover{
-        transform: translateZ(0) scale(1.5);
-    }
-
-
-    .right-side{
-        transform-style: preserve-3d;
-        transform: rotateY(-20deg);
-        transition: transform 0.5s ease-out;
-        cursor: pointer;
-    }
-
-    .right-side:hover{
-        transform: rotateY(0) translateX(calc(-50vw + var(--size)/2)) scale(1.5);
-    }
-
-}
-
-.slider {
-    display: flex;
-    gap: 1rem;
+.slider{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: minmax(250px, 1fr);
+    margin-inline: $margin-inline;
+    container-type: inline-size;
+    container-name: slider-container;
 
     &:has(.left-side:hover) {
         .middle-side,
         .right-side {
             opacity: 0;
-            transition-duration: 0.4s;
-            transition-delay: 0s;
         }
     }
 
@@ -76,16 +39,135 @@
         .left-side,
         .right-side {
             opacity: 0;
-            transition-duration: 0.4s;
-            transition-delay: 0s;
         }
     }
     &:has(.right-side:hover) {
         .left-side,
         .middle-side {
             opacity: 0;
-            transition-duration: 0.4s;
-            transition-delay: 0s;
         }
     }
 }
+.perspective {
+    perspective: $slider-perspective;
+    .left-side{
+        transform-style: preserve-3d;
+        transform: rotateY(20deg);
+        cursor: pointer;
+    }
+    .left-side:hover{
+        animation: leftTransition $slider-transition-time ease-out forwards;
+    }
+    .middle-side{
+        transform-style: preserve-3d;
+        transform: translateZ(-110px);
+        transition: transform $slider-transition-time ease-out;
+        cursor: pointer;
+    }
+    .middle-side:hover{
+        animation: middleTransition $slider-transition-time ease-out forwards;
+    }
+    .right-side{
+        transform-style: preserve-3d;
+        transform: rotateY(-20deg);
+        cursor: pointer;
+    }
+    .right-side:hover{
+        animation: rightTransition $slider-transition-time ease-out forwards;
+    }
+    img {
+        border-radius: 12px;
+        width: var(--img-width);
+        height: var(--img-height);
+        transition: all $slider-transition-time ease-out;
+        object-fit: cover;
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    .slider{
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, 1fr);
+        place-items: center;
+
+        .perspective {
+            width: 100%;
+            .left-side,
+            .middle-side,
+            .right-side {
+                position: relative;
+                transform: none;
+                animation: none;
+                a{
+                    display: block;
+                    img {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 360px;
+                    }
+                }
+
+            }
+
+            .left-side img {
+                animation: animSlide 15s infinite both;
+                animation-delay: 0s;
+            }
+            .middle-side img {
+                animation: animSlide 15s infinite both;
+                animation-delay: 5s;
+            }
+            .right-side img {
+                animation: animSlide 15s infinite both;
+                animation-delay: 10s;
+            }
+
+        }
+    }
+}
+
+@keyframes leftTransition {
+    from {
+        transform: rotateY(20deg);
+    }
+    to {
+        transform-origin: calc(var(--img-width)/2) $header-size;
+        transform: rotateY(0) translateX(calc(50vw - var(--img-width)/2 - $margin-inline)) scale(var(--scale-x), var(--scale-y));
+    }
+}
+@keyframes middleTransition {
+    from {
+        transform: translateZ(-110px);
+    }
+    to {
+        transform-origin: calc(var(--img-width)/2) $header-size;
+        transform: scale(var(--scale-x), var(--scale-y));
+    }
+}
+@keyframes rightTransition {
+    from {
+        transform: rotateY(-20deg);
+    }
+    to {
+        transform-origin: calc(var(--img-width)/2) $header-size;
+        transform: rotateY(0) translateX(calc(-50vw + var(--img-width)/2 + $margin-inline)) scale(var(--scale-x), var(--scale-y));
+    }
+}
+
+@keyframes animSlide {
+    0%, 25% {
+        opacity: 1;
+        z-index: 3;
+    }
+    33%, 92% {
+        opacity: 0;
+        z-index: 1;
+    }
+    100% {
+        opacity: 1;
+        z-index: 3;
+    }
+}
+
