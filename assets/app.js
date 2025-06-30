@@ -40,18 +40,18 @@ const updateDimensions = informationBreadPoint => {
 }
 const sizeInformation = width => {
     const breakPointsInfo = [
-        {width: 1920, imgWidth: 620, imgHeight: 465, scaleX: 2.9, scaleY: 1.5},
-        {width: 1800, imgWidth: 568, imgHeight: 426, scaleX: 2.73, scaleY: 1.43},
-        {width: 1600, imgWidth: 517, imgHeight: 388, scaleX: 2.55, scaleY: 1.35},
-        {width: 1440, imgWidth: 465, imgHeight: 349, scaleX: 2.38, scaleY: 1.28},
-        {width: 1280, imgWidth: 413, imgHeight: 310, scaleX: 2.2, scaleY: 1.2},
-        {width: 1150, imgWidth: 356, imgHeight: 267, scaleX: 2.0, scaleY: 1.1},
-        {width: 1024, imgWidth: 334, imgHeight: 251, scaleX: 2.0, scaleY: 1.1},
-        {width: 960, imgWidth: 334, imgHeight: 251, scaleX: 1.92, scaleY: 1.06},
-        {width: 768, imgWidth: 300, imgHeight: 225, scaleX: 1.8, scaleY: 1.0},
-        {width: 640, imgWidth: 275, imgHeight: 197, scaleX: 1.7, scaleY: 0.95},
-        {width: 576, imgWidth: 262, imgHeight: 183, scaleX: 1.65, scaleY: 0.925},
-        {width: 480, imgWidth: 250, imgHeight: 169, scaleX: 1.6, scaleY: 0.9}
+        {width: 1920, imgWidth: 620, imgHeight: 465, scaleX: 1.5, scaleY: 1.5},
+        {width: 1800, imgWidth: 568, imgHeight: 426, scaleX: 1.5, scaleY: 1.5},
+        {width: 1600, imgWidth: 517, imgHeight: 388, scaleX: 1.5, scaleY: 1.5},
+        {width: 1440, imgWidth: 465, imgHeight: 349, scaleX: 1.5, scaleY: 1.5},
+        {width: 1280, imgWidth: 413, imgHeight: 310, scaleX: 1.5, scaleY: 1.5},
+        {width: 1150, imgWidth: 356, imgHeight: 267, scaleX: 1, scaleY: 1},
+        {width: 1024, imgWidth: 334, imgHeight: 251, scaleX: 1, scaleY: 1},
+        {width: 960, imgWidth: 334, imgHeight: 251, scaleX: 1, scaleY: 1},
+        {width: 768, imgWidth: 300, imgHeight: 225, scaleX: 1, scaleY: 1},
+        {width: 640, imgWidth: 275, imgHeight: 197, scaleX: 1, scaleY: 1},
+        {width: 576, imgWidth: 262, imgHeight: 183, scaleX: 1, scaleY: 1},
+        {width: 480, imgWidth: 250, imgHeight: 169, scaleX: 1, scaleY: 1}
     ];
     const breakPoint = breakPointsInfo.find(bp => bp.width <= width);
     console.log(breakPoint);

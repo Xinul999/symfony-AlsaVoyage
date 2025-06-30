@@ -12,12 +12,24 @@ $header-size: 10px;
 
 .background-image{
     position: relative;
-    background-image: url('../images/background.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
     width: 100%;
     height: 100vh;
-    z-index: -1;
+    z-index: 0;
+    &::before{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('../images/background.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        opacity: 0.70;
+        z-index: -1;
+    }
+
+
 }
 
 .slider{
@@ -25,23 +37,21 @@ $header-size: 10px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: minmax(250px, 1fr);
     margin-inline: $margin-inline;
-    container-type: inline-size;
-    container-name: slider-container;
 
-    &:has(.left-side:hover) {
+    &:has(.left-side:active) {
         .middle-side,
         .right-side {
             opacity: 0;
         }
     }
 
-    &:has(.middle-side:hover) {
+    &:has(.middle-side:active) {
         .left-side,
         .right-side {
             opacity: 0;
         }
     }
-    &:has(.right-side:hover) {
+    &:has(.right-side:active) {
         .left-side,
         .middle-side {
             opacity: 0;
@@ -55,7 +65,7 @@ $header-size: 10px;
         transform: rotateY(20deg);
         cursor: pointer;
     }
-    .left-side:hover{
+    .left-side:active{
         animation: leftTransition $slider-transition-time ease-out forwards;
     }
     .middle-side{
@@ -64,7 +74,7 @@ $header-size: 10px;
         transition: transform $slider-transition-time ease-out;
         cursor: pointer;
     }
-    .middle-side:hover{
+    .middle-side:active{
         animation: middleTransition $slider-transition-time ease-out forwards;
     }
     .right-side{
@@ -72,16 +82,40 @@ $header-size: 10px;
         transform: rotateY(-20deg);
         cursor: pointer;
     }
-    .right-side:hover{
+    .right-side:active{
         animation: rightTransition $slider-transition-time ease-out forwards;
     }
-    img {
-        border-radius: 12px;
-        width: var(--img-width);
-        height: var(--img-height);
-        transition: all $slider-transition-time ease-out;
-        object-fit: cover;
+    figure{
+        position: relative;
+        margin: 0;
+        display: block;
+        h2{
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-shadow:
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000,
+                0 0 10px rgba(255, 255, 255, 0.7);
+            width: 90%;
+            color: white;
+            text-align: center;
+        }
+        img {
+            display: block;
+            border-radius: 12px;
+            width: var(--img-width);
+            height: var(--img-height);
+            pointer-events: none;
+            transition: all $slider-transition-time ease-out;
+            object-fit: cover;
+            user-select: none;
+        }
     }
+
 }
 
 @media screen and (max-width: 1050px) {
@@ -98,8 +132,12 @@ $header-size: 10px;
                 position: relative;
                 transform: none;
                 animation: none;
-                a{
+                figure{
                     display: block;
+
+                    h2 {
+                        z-index: 10;
+                    }
                     img {
                         position: absolute;
                         top: 0;
@@ -111,19 +149,18 @@ $header-size: 10px;
 
             }
 
-            .left-side img {
-                animation: animSlide 15s infinite both;
+            .left-side {
+                animation: animSlide 12s infinite both;
                 animation-delay: 0s;
             }
-            .middle-side img {
-                animation: animSlide 15s infinite both;
-                animation-delay: 5s;
+            .middle-side {
+                animation: animSlide 12s infinite both;
+                animation-delay: 3s;
             }
-            .right-side img {
-                animation: animSlide 15s infinite both;
-                animation-delay: 10s;
+            .right-side {
+                animation: animSlide 12s infinite both;
+                animation-delay: 6s;
             }
-
         }
     }
 }
@@ -157,11 +194,11 @@ $header-size: 10px;
 }
 
 @keyframes animSlide {
-    0%, 25% {
+    0%, 20% {
         opacity: 1;
         z-index: 3;
     }
-    33%, 92% {
+    30%, 90% {
         opacity: 0;
         z-index: 1;
     }
