@@ -7,7 +7,7 @@ import './bootstrap.js';
  */
 import './styles/app.scss';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('turbo:load', () => {
 
     const resizeObserver = new ResizeObserver((entries) => {
         for (const entry of entries) {
@@ -57,5 +57,9 @@ const sizeInformation = width => {
     console.log(breakPoint);
     return breakPoint;
 }
+
+window.screenSize = screenSize;
+window.sizeInformation = sizeInformation;
+window.updateDimensions = updateDimensions;
 
 

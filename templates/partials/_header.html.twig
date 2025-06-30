@@ -1,10 +1,17 @@
 <header class="container">
     <nav class="text-black pt-4">
         <ul class="d-flex list-unstyled justify-content-between">
-            <li class="fw-bold text-dark opacity-75">Mon actualité</li>
+            <li class="fw-bold text-dark opacity-75">
+                <a href="{{ path('app_home') }}" class="text-decoration-none text-dark">Accueil</a>
+            </li>
+            <li class="fw-bold text-dark opacity-75">Mes actualité</li>
             <li class="fw-bold text-dark opacity-75">Commenter mon actualité</li>
-            <li class="fw-bold text-dark opacity-75">Présentation client</li>
-            <li class="fw-bold text-dark opacity-75"><a href="{{ path('app_contact') }}" class="text-decoration-none text-dark">Contact</a></li>
+            <li class="fw-bold text-dark opacity-75">
+                <a href="{{ path('app_presentation_client') }}" class="text-decoration-none text-dark">Présentation client</a>
+            </li>
+            <li class="fw-bold text-dark opacity-75">
+                <a href="{{ path('app_contact') }}" class="text-decoration-none text-dark">Contact</a>
+            </li>
             <li class="fw-bold text-dark opacity-75">Connexion</li>
         </ul>
     </nav>

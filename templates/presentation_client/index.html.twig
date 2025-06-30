@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Presentation{% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+    <h1 class="title">Bienvenue sur mon Blog</h1>
+    <div  class="d-flex">
+        <p class="description">
+            Je m'appelle <strong>{{ bob.name }}</strong>, j'ai <strong>{{ bob.age }} ans</strong> et j'adore parcourir le monde.<br />
+            Mon challenge : visiter le plus de pays d'ici le
+            <time datetime="2025-01-01">2025</time> jusqu'au <time datetime="2030-01-10">2030</time><br />
+            À mon actif : <strong>{{ bob.totalCountries }}</strong> pays découverts,
+            de la gastronomie aux lieux les plus insolites.<br/>
+            Vivez avec moi mes aventures !
+        </p>
+        <figure>
+            <img src="{{ asset('images/bob.png') }}" width="300" height="499" alt="Information bob le voyage">
+        </figure>
+    </div>
+
+
+</div>
+{% endblock %}
