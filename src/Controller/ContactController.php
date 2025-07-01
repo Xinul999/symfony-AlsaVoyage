@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Helper\Helper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -43,7 +44,7 @@ final class ContactController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            if(!$this->checkEmail($data['email'])){
+            if(!Helper::checkEmail($data['email'])){
                 $this->addFlash('error', 'Votre adresse email est invalide!');
             }
             else{
@@ -57,9 +58,4 @@ final class ContactController extends AbstractController
         ]);
     }
 
-    private function checkEmail($email): bool {
-        $pattern = '/^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/';
-        return preg_match($pattern, $email);
-
-    }
 }

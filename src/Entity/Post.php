@@ -35,9 +35,16 @@ class Post
     #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'post')]
     private Collection $commentaires;
 
+    /**
+     * @var Collection<int, Image>
+     */
+    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'post', orphanRemoval: true)]
+    private Collection $images;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -117,6 +124,36 @@ class Post
             // set the owning side to null (unless already changed)
             if ($commentaire->getPost() === $this) {
                 $commentaire->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Image>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): static
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): static
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getPost() === $this) {
+                $image->setPost(null);
             }
         }
 

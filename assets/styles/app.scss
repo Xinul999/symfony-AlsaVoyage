@@ -39,51 +39,51 @@ $header-size: 10px;
     grid-template-rows: minmax(250px, 1fr);
     margin-inline: $margin-inline;
 
-    &:has(.left-side:active) {
-        .middle-side,
-        .right-side {
+    &:has(.side0:active) {
+        .side1,
+        .side2 {
             opacity: 0;
         }
     }
 
-    &:has(.middle-side:active) {
-        .left-side,
-        .right-side {
+    &:has(.side1:active) {
+        .side0,
+        .side2 {
             opacity: 0;
         }
     }
-    &:has(.right-side:active) {
-        .left-side,
-        .middle-side {
+    &:has(.side2:active) {
+        .side0,
+        .side1 {
             opacity: 0;
         }
     }
 }
 .perspective {
     perspective: $slider-perspective;
-    .left-side{
+    .side0{
         transform-style: preserve-3d;
         transform: rotateY(20deg);
         cursor: pointer;
     }
-    .left-side:active{
+    .side0:active{
         animation: leftTransition $slider-transition-time ease-out forwards;
     }
-    .middle-side{
+    .side1{
         transform-style: preserve-3d;
         transform: translateZ(-110px);
         transition: transform $slider-transition-time ease-out;
         cursor: pointer;
     }
-    .middle-side:active{
+    .side1:active{
         animation: middleTransition $slider-transition-time ease-out forwards;
     }
-    .right-side{
+    .side2{
         transform-style: preserve-3d;
         transform: rotateY(-20deg);
         cursor: pointer;
     }
-    .right-side:active{
+    .side2:active{
         animation: rightTransition $slider-transition-time ease-out forwards;
     }
     figure{
@@ -127,9 +127,9 @@ $header-size: 10px;
 
         .perspective {
             width: 100%;
-            .left-side,
-            .middle-side,
-            .right-side {
+            .side0,
+            .side1,
+            .side2 {
                 position: relative;
                 transform: none;
                 animation: none;
@@ -150,15 +150,15 @@ $header-size: 10px;
 
             }
 
-            .left-side {
+            .side0 {
                 animation: animSlide 12s infinite both;
                 animation-delay: 0s;
             }
-            .middle-side {
+            .side1 {
                 animation: animSlide 12s infinite both;
                 animation-delay: 3s;
             }
-            .right-side {
+            .side2 {
                 animation: animSlide 12s infinite both;
                 animation-delay: 6s;
             }

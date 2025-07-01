@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserForm;
+use App\Helper\Helper;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,7 +59,13 @@ final class AdminUserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
+            if(!Helper::checkEmail($user->getEmail() )){
+                $this->addFlash('error', 'Votre adresse email est invalide!');
+                return $this->render('admin_user/edit.html.twig', [
+                    'user' => $user,
+                    'form' => $form,
+                ]);
+            }
             return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
         }
 

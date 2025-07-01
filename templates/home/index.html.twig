@@ -5,7 +5,7 @@
 {%  block body %}
         <h1 class="text-center text-black opacity-75">Blog de Bob le voyageur</h1>
         <div class="slider">
-            <article class="perspective">
+            <!--article class="perspective">
                 <div class="left-side">
                     <figure>
                         <h2>Visitez l'italie</h2>
@@ -28,6 +28,22 @@
                         <img src="{{ asset('images/sicile.jpg') }}" width="620" height="465" alt="Payase de la sicile">
                     </figure>
                 </div>
-            </article>
+            </article-->
+
+            {% for post in posts %}
+                <article class="perspective">
+                    <div class="side{{ loop.index0 }}">
+                        <figure>
+                            <h2>{{ post.titre }}</h2>
+                            {% if post.images is not empty %}
+                                <img src="{{ asset(post.images.first.chemin) }}" width="620" height="465" alt="{{ post.titre }}">
+                            {% else %}
+                                <img src="{{ asset('images/placeholder.jpg') }}" width="620" height="465" alt="placeholder">
+                            {% endif %}
+                        </figure>
+                    </div>
+                </article>
+            {% endfor %}
+
         </div>
 {% endblock %}

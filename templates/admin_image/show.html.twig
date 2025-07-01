@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Image{% endblock %}
+
+{% block body %}
+    <h1>Image</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ image.id }}</td>
+            </tr>
+            <tr>
+                <th>NomImage</th>
+                <td>{{ image.nomImage }}</td>
+            </tr>
+            <tr>
+                <th>Chemin</th>
+                <td>{{ image.chemin }}</td>
+            </tr>
+            <tr>
+                <th>MimeType</th>
+                <td>{{ image.mimeType }}</td>
+            </tr>
+            <tr>
+                <th>DateUpload</th>
+                <td>{{ image.dateUpload ? image.dateUpload|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_image_index') }}">back to list</a>
+
+    <a href="{{ path('app_admin_image_edit', {'id': image.id}) }}">edit</a>
+
+    {{ include('admin_image/_delete_form.html.twig') }}
+{% endblock %}

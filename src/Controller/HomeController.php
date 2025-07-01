@@ -11,9 +11,12 @@ use Symfony\Component\Routing\Attribute\Route;
 final class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(): Response
+    public function index(PostRepository $postRepository): Response
     {
-        return $this->render('home/index.html.twig');
+        $post_last_3 = $postRepository->findBy([],['dateHeureCreation' => 'DESC'], 3);
+        return $this->render('home/index.html.twig', [
+            'posts' => $post_last_3
+        ]);
 
     }
 
