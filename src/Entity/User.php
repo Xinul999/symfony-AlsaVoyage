@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\UserRole;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -58,6 +59,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->postsPublies = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+        $this->roles = UserRole::getDefaultRoles();
     }
 
     public function getId(): ?int
@@ -105,7 +107,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = UserRole::USER->value;
 
         return array_unique($roles);
     }
