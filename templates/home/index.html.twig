@@ -41,6 +41,11 @@
                                 <img src="{{ asset('images/placeholder.jpg') }}" width="620" height="465" alt="placeholder">
                             {% endif %}
                         </figure>
+                        <footer class="contenu">
+                            <h3>{{ post.dateHeureCreation|date('d/m/Y') }}</h3>
+                            <p>{{ post.contenu|striptags|slice(0, 150) }}...</p>
+                            <!-- creation d'un lien pour voir le post -->
+                        </footer>
                     </div>
                 </article>
             {% endfor %}
