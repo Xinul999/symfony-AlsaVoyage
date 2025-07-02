@@ -8,6 +8,7 @@ use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Test\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
@@ -18,8 +19,7 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
-    public function __construct(private EmailVerifier $emailVerifier)
-    {
+    public function __construct(private EmailVerifier $emailVerifier){
     }
 
     #[Route('/register', name: 'app_register')]
@@ -31,6 +31,21 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var string $plainPassword */
+
+            $existingUser = $entityManager->getRepository(User::class)->findOneBy(['username' => $user->getUsername()]);
+            if ($existingUser) {
+                $this->addFlash('error', 'Ce nom d\'utilisateur est déjà utilisé !');
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form,
+                ]);
+            }
+            $existingEmail = $entityManager->getRepository(User::class)->findOneBy(['email' => $user->getEmail()]);
+            if ($existingEmail) {
+                $this->addFlash('error', 'Cette adresse email est déjà utilisée !');
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form,
+                ]);
+            }
             $plainPassword = $form->get('plainPassword')->getData();
 
             // encode the plain password
@@ -43,16 +58,19 @@ class RegistrationController extends AbstractController
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('adeline.bonnard1@ac-dijon.fr', 'LPDWCA'))
-                    ->to((string) $user->getId())
+                    ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
-            // do anything else you need here, like send an email
+            $this->addFlash('success', 'Votre compte a été créé ! Vérifiez votre email pour confirmer votre inscription.');
 
-            return $this->redirectToRoute('_profiler_home');
+            return $this->redirectToRoute('app_home');
         }
 
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('error', 'Il y a des erreurs dans le formulaire. Veuillez les corriger.');
+        }
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
         ]);
@@ -79,4 +97,5 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('app_register');
     }
+
 }

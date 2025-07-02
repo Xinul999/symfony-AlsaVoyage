@@ -3,16 +3,32 @@
         <ul class="d-flex list-unstyled justify-content-between">
             <li class="fw-bold text-dark opacity-75">
                 <a href="{{ path('app_home') }}" class="text-decoration-none text-dark">Accueil</a>
+                <span class="w-100 d-block"></span>
             </li>
-            <li class="fw-bold text-dark opacity-75">Mes actualité</li>
-            <li class="fw-bold text-dark opacity-75">Commenter mon actualité</li>
+            <li class="fw-bold text-dark opacity-75">
+                <a href="{{ path('app_postList') }}"  class="text-decoration-none text-dark">Actualités</a>
+                <span class="w-100 d-block"></span>
+            </li>
             <li class="fw-bold text-dark opacity-75">
                 <a href="{{ path('app_presentation_client') }}" class="text-decoration-none text-dark">Présentation client</a>
+                <span class="w-100 d-block"></span>
             </li>
             <li class="fw-bold text-dark opacity-75">
                 <a href="{{ path('app_contact') }}" class="text-decoration-none text-dark">Contact</a>
+                <span class="w-100 d-block"></span>
             </li>
-            <li class="fw-bold text-dark opacity-75">Connexion</li>
+            {% if app.user %}
+                <li class="fw-bold text-dark opacity-75">
+                    <a href="{{ path('app_logout') }}" class="text-decoration-none text-dark">[{{ app.user.username }}] Déconnexion</a>
+                    <span class="w-100 d-block"></span>
+                </li>
+            {% else %}
+                {# Utilisateur non connecté #}
+                <li class="fw-bold text-dark opacity-75">
+                    <a href="{{ path('app_login') }}" class="text-decoration-none text-dark">Connexion</a>
+                    <span class="w-100 d-block"></span>
+                </li>
+            {% endif %}
         </ul>
     </nav>
 </header>

@@ -1,10 +1,44 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Liste des articles{% endblock %}
-
+{%  block stylesheets %}
+    {{ parent() }}
+    <style>
+        .post-list-container {
+            max-width: clamp(600px, 80vw, 1280px);
+            max-height: clamp(400px,70vh, 800px);
+            overflow-y: scroll;
+            margin: 0 auto;
+            scrollbar-color: #000000 rgba(0, 0, 0, 0.05);
+        }
+        article {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            background-color: rgba(255, 255, 255, 0.65);
+        }
+        article h2, article p {
+            margin: 0;
+        }
+        article time {
+            font-size: smaller;
+        }
+        article a {
+            color: #337ab7;
+            text-decoration: none;
+        }
+        article:hover {
+            background-color: rgba(255, 255, 255, 1);
+        }
+        article:hover a {
+            color: #333;
+        }
+    </style>
+{% endblock %}
 {% block body %}
-    <h1>Liste des articles</h1>
-    <ul>
+<div class="post-list-container">
+    <h1 class="text-center">Liste des posts</h1>
+    <ul class="list-unstyled">
         {% for post in posts %}
         <li>
             <article id='{{ post.id }}'>
@@ -13,7 +47,9 @@
                 <p>
                     <time datetime="{{ post.dateHeureCreation ? post.dateHeureCreation|date('Y-m-d H:i:s') : ''}}"> {{ post.dateHeureCreation ? post.dateHeureCreation|date('D d M Y') : ''}}</time>
                 </p>
+                <!-- Gestion du post avec tous les commentaire -> app_postList_show -->
                 <a href="{{ path('app_postList_show', {'id': post.id}) }}">Lire l'article en entier</a>
+                <a href="{{ path('app_admin_commentaire_new', {'id': post.id}) }}">Ajouter un commentaire</a>
             </article>
         </li>
         {% else %}
@@ -21,4 +57,5 @@
         {% endfor %}
     </ul>
     <a href="{{ path('app_admin_post_new') }}">Rédiger un nouvel article</a>
+</div>
 {% endblock %}

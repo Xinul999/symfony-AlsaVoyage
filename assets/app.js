@@ -17,6 +17,7 @@ document.addEventListener('turbo:load', () => {
             }
         }
     });
+
     // Body or HTML but not css margin padding ... just full screen!!
     resizeObserver.observe(document.querySelector('body'), {box: 'border-box'});
 });
@@ -44,8 +45,8 @@ const sizeInformation = width => {
         {width: 1800, imgWidth: 568, imgHeight: 426, scaleX: 1.5, scaleY: 1.5},
         {width: 1600, imgWidth: 517, imgHeight: 388, scaleX: 1.5, scaleY: 1.5},
         {width: 1440, imgWidth: 465, imgHeight: 349, scaleX: 1.5, scaleY: 1.5},
-        {width: 1280, imgWidth: 413, imgHeight: 310, scaleX: 1.5, scaleY: 1.5},
-        {width: 1150, imgWidth: 356, imgHeight: 267, scaleX: 1, scaleY: 1},
+        {width: 1280, imgWidth: 413, imgHeight: 310, scaleX: 1.3, scaleY: 1.3},
+        {width: 1150, imgWidth: 356, imgHeight: 267, scaleX: 1.1, scaleY: 1.1},
         {width: 1024, imgWidth: 334, imgHeight: 251, scaleX: 1, scaleY: 1},
         {width: 960, imgWidth: 334, imgHeight: 251, scaleX: 1, scaleY: 1},
         {width: 768, imgWidth: 300, imgHeight: 225, scaleX: 1, scaleY: 1},

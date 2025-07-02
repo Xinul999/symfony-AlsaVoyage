@@ -5,50 +5,52 @@
 {%  block body %}
         <h1 class="text-center text-black opacity-75">Blog de Bob le voyageur</h1>
         <div class="slider">
-            <!--article class="perspective">
-                <div class="left-side">
-                    <figure>
-                        <h2>Visitez l'italie</h2>
-                        <img src="{{ asset('images/italie.jpg') }}" width="620" height="465" alt="Image de l'italie présentant le reste d'un vestige">
-                    </figure>
-                </div>
-            </article>
-            <article class="perspective">
-                <div class="middle-side">
-                    <figure>
-                        <h2>Le japon vous tente</h2>
-                        <img src="{{ asset('images/japon.jpg') }}" width="620" height="465" alt="Une allée au japon">
-                    </figure>
-                </div>
-            </article>
-            <article class="perspective">
-                <div class="right-side">
-                    <figure>
-                        <h2>La sicile un endroit de rêve</h2>
-                        <img src="{{ asset('images/sicile.jpg') }}" width="620" height="465" alt="Payase de la sicile">
-                    </figure>
-                </div>
-            </article-->
-
-            {% for post in posts %}
+            {% if posts is not empty %}
+                {% for post in posts %}
+                    <article class="perspective">
+                        <div class="side{{ loop.index0 }}">
+                            <figure>
+                                <h2>{{ post.titre }}</h2>
+                                {% if post.images is not empty %}
+                                    <img src="{{ asset(post.images.first.chemin) }}" width="620" height="465" alt="{{ post.titre }}">
+                                {% else %}
+                                    <img src="{{ asset('images/placeholder.jpg') }}" width="620" height="465" alt="placeholder">
+                                {% endif %}
+                            </figure>
+                            <footer class="contenu scroll-bar">
+                                <h3>{{ post.dateHeureCreation|date('d/m/Y') }}</h3>
+                                <p>{{ post.contenu|striptags|slice(0, 140) }}...</p>
+                                <!-- creation d'un lien pour voir le post -->
+                            </footer>
+                        </div>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <!-- affichage d'un message d'erreur si aucun article n'est disponible -->
                 <article class="perspective">
-                    <div class="side{{ loop.index0 }}">
+                    <div class="side0">
                         <figure>
-                            <h2>{{ post.titre }}</h2>
-                            {% if post.images is not empty %}
-                                <img src="{{ asset(post.images.first.chemin) }}" width="620" height="465" alt="{{ post.titre }}">
-                            {% else %}
-                                <img src="{{ asset('images/placeholder.jpg') }}" width="620" height="465" alt="placeholder">
-                            {% endif %}
+                            <h2>Aucun article disponible</h2>
+                            <img src="{{ asset('images/placeholder.jpg') }}" width="620" height="465" alt="Aucun contenu disponible">
                         </figure>
-                        <footer class="contenu">
-                            <h3>{{ post.dateHeureCreation|date('d/m/Y') }}</h3>
-                            <p>{{ post.contenu|striptags|slice(0, 150) }}...</p>
-                            <!-- creation d'un lien pour voir le post -->
-                        </footer>
                     </div>
                 </article>
-            {% endfor %}
-
+                <article class="perspective">
+                    <div class="side1">
+                        <figure>
+                            <h2>Aucun article disponible</h2>
+                            <img src="{{ asset('images/placeholder.jpg') }}" width="620" height="465" alt="Aucun contenu disponible">
+                        </figure>
+                    </div>
+                </article>
+                <article class="perspective">
+                    <div class="side1">
+                        <figure>
+                            <h2>Aucun article disponible</h2>
+                            <img src="{{ asset('images/placeholder.jpg') }}" width="620" height="465" alt="Aucun contenu disponible">
+                        </figure>
+                    </div>
+                </article>
+            {% endif %}
         </div>
 {% endblock %}

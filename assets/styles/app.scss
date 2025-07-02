@@ -4,12 +4,27 @@ $slider-transition-time: 0.5s;
 $margin-inline: 30px;
 $header-size: 10px;
 
-*,::before,::after{
+*,
+::before,
+::after{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
+header{
+    li{
+        position: relative;
+    }
+    li:hover{
+        span{
+            position: absolute;
+            bottom: -2px;
+            height: 2px;
+            background-color: yellow;
+        }
 
+    }
+}
 .background-image{
     position: relative;
     width: 100%;
@@ -61,6 +76,7 @@ $header-size: 10px;
 }
 .perspective {
     perspective: $slider-perspective;
+    user-select: none;
     .side0{
         transform-style: preserve-3d;
         transform: rotateY(20deg);
@@ -113,23 +129,29 @@ $header-size: 10px;
             pointer-events: none;
             transition: all $slider-transition-time ease-out;
             object-fit: cover;
-            user-select: none;
             width: 100%;
         }
     }
     .contenu{
-        background-color: rgba(0,0,0,0.4);
+        background-color: rgba(0,0,0,0.45);
         border-bottom-left-radius: 12px;
         border-bottom-right-radius: 12px;
-        padding: 16px;
+        padding: 8px 16px;
+        height: 145px;
+        color: white;
+        overflow: hidden;
         h3{
-            color: white;
+            margin: 0;
+            font-size: clamp(14px, 20px, 26px);
             text-shadow:
                 -1px -1px 0 #000,
                 1px -1px 0 #000,
                 -1px 1px 0 #000,
                 1px 1px 0 #000,
                 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+        p{
+            font-size: 18px;
         }
     }
 
@@ -194,12 +216,10 @@ $header-size: 10px;
 form {
     display: grid;
     place-items: center;
-    height: clamp(500px, 70vh, 700px);
+    /*height: clamp(500px, 70vh, 700px);*/
 
-    #form > div{
-        display: flex;
-        align-items: center;
-        gap: 16px;
+    [id*="form"] > div{
+        display: grid;
         --size-width: 400px;
         label{
             font-weight: bold;
@@ -208,6 +228,14 @@ form {
         }
         input, textarea{
            min-width: var(--size-width);
+        }
+        &:has(input[type="checkbox"]){
+            display: flex;
+            justify-content: space-between;
+        }
+        input[type="checkbox"]{
+            min-width: unset;
+            justify-self: start;
         }
         textarea{
             min-height: 200px;
@@ -220,8 +248,8 @@ form {
         }
     }
 
-    #form > div + div{
-        margin-block: 16px;
+    [id*="form"] > div + div{
+        margin-block: 8px;
     }
 
 

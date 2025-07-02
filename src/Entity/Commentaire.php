@@ -25,7 +25,7 @@ class Commentaire
     private ?User $auteur = null;
 
     #[ORM\Column]
-    private ?bool $signale = null;
+    private ?bool $signale = false;
 
     #[ORM\ManyToOne(inversedBy: 'commentaires')]
     #[ORM\JoinColumn(nullable: false)]

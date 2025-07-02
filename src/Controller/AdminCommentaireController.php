@@ -3,10 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Commentaire;
+use App\Entity\Post;
+use App\Entity\User;
 use App\Form\CommentaireForm;
 use App\Repository\CommentaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -26,11 +33,11 @@ final class AdminCommentaireController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $commentaire = new Commentaire();
-        $commentaire->setDateHeureCreation(new \DateTime());
         $form = $this->createForm(CommentaireForm::class, $commentaire);
         $form->handleRequest($request);
-
+        $user = $this->getUser();
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
             $entityManager->persist($commentaire);
             $entityManager->flush();
 
