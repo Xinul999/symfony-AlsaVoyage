@@ -11,26 +11,26 @@
             margin: 0 auto;
             scrollbar-color: #000000 rgba(0, 0, 0, 0.05);
         }
-        article {
+        .post-article {
             padding: 1rem;
             border-radius: 12px;
             margin-bottom: 1rem;
             background-color: rgba(255, 255, 255, 0.65);
         }
-        article h2, article p {
+        .post-article h2, article p {
             margin: 0;
         }
-        article time {
+        .post-article time {
             font-size: smaller;
         }
-        article a {
+        .post-article a {
             color: #337ab7;
             text-decoration: none;
         }
-        article:hover {
+        .post-article:hover {
             background-color: rgba(255, 255, 255, 1);
         }
-        article:hover a {
+        .post-article:hover a {
             color: #333;
         }
     </style>
@@ -41,7 +41,7 @@
     <ul class="list-unstyled">
         {% for post in posts %}
         <li>
-            <article id='{{ post.id }}'>
+            <article id='{{ post.id }}' class="post-article">
                 <h2>{{ post.titre }}</h2>
                 <p>{{ post.contenu }}</p>
                 <p>

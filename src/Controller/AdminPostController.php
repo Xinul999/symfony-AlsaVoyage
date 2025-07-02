@@ -25,8 +25,12 @@ final class AdminPostController extends AbstractController
     #[Route('/new', name: 'app_admin_post_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $post = new Post();
-        $post->setDateHeureCreation( new \DateTime('now'));
+        $post->setDateHeureCreation(new \DateTime('now'));
         $form = $this->createForm(PostForm::class, $post);
         $form->handleRequest($request);
 
@@ -41,6 +45,8 @@ final class AdminPostController extends AbstractController
             'post' => $post,
             'form' => $form,
         ]);
+
+
     }
 
     #[Route('/{id}', name: 'app_admin_post_show', methods: ['GET'])]
@@ -54,6 +60,9 @@ final class AdminPostController extends AbstractController
     #[Route('/{id}/edit', name: 'app_admin_post_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
         $form = $this->createForm(PostForm::class, $post);
         $form->handleRequest($request);
 
@@ -67,16 +76,22 @@ final class AdminPostController extends AbstractController
             'post' => $post,
             'form' => $form,
         ]);
+
     }
+
 
     #[Route('/{id}', name: 'app_admin_post_delete', methods: ['POST'])]
     public function delete(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->getPayload()->getString('_token'))) {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+        if ($this->isCsrfTokenValid('delete' . $post->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($post);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_admin_post_index', [], Response::HTTP_SEE_OTHER);
+
     }
 }

@@ -26,6 +26,10 @@ final class AdminImageController extends AbstractController
     #[Route('/new', name: 'app_admin_image_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $image = new Image();
         $image->setDateUpload(new \DateTime());
         $form = $this->createForm(ImageForm::class, $image);
@@ -35,14 +39,14 @@ final class AdminImageController extends AbstractController
 
             $imageFile = $form->get('chemin')->getData();
 
-            if($imageFile){
+            if ($imageFile) {
                 $image->setNomImage($imageFile->getClientOriginalName());
                 $image->setMimeType($imageFile->getMimeType());
                 $filesystem = new FileSystem();
-                if(!$filesystem->exists($this->getParameter('images_directory'))) {
-                  $filesystem->mkdir($this->getParameter('images_directory'));
+                if (!$filesystem->exists($this->getParameter('images_directory'))) {
+                    $filesystem->mkdir($this->getParameter('images_directory'));
                 }
-                $root = $this->getParameter('root_dir') .'/';
+                $root = $this->getParameter('root_dir') . '/';
                 $imageFile->move($this->getParameter('images_directory'), $imageFile->getClientOriginalName());
                 $image->setChemin($root . $image->getNomImage());
 
@@ -58,6 +62,7 @@ final class AdminImageController extends AbstractController
             'image' => $image,
             'form' => $form,
         ]);
+
     }
 
     #[Route('/{id}', name: 'app_admin_image_show', methods: ['GET'])]
@@ -71,6 +76,9 @@ final class AdminImageController extends AbstractController
     #[Route('/{id}/edit', name: 'app_admin_image_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Image $image, EntityManagerInterface $entityManager): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
         $form = $this->createForm(ImageForm::class, $image);
         $form->handleRequest($request);
 
@@ -89,9 +97,9 @@ final class AdminImageController extends AbstractController
                 $image->setMimeType($imageFile->getMimeType());
                 $image->setDateUpload(new \DateTime());
 
-                $root = $this->getParameter('root_dir') .'/';
+                $root = $this->getParameter('root_dir') . '/';
                 $imageFile->move($this->getParameter('images_directory'), $imageFile->getClientOriginalName());
-                $image->setChemin($root .$imageFile->getClientOriginalName());
+                $image->setChemin($root . $imageFile->getClientOriginalName());
 
             }
 
@@ -108,12 +116,17 @@ final class AdminImageController extends AbstractController
     #[Route('/{id}', name: 'app_admin_image_delete', methods: ['POST'])]
     public function delete(Request $request, Image $image, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$image->getId(), $request->getPayload()->getString('_token'))) {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+        if ($this->isCsrfTokenValid('delete' . $image->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($image);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_admin_image_index', [], Response::HTTP_SEE_OTHER);
+
+
     }
 
 }
