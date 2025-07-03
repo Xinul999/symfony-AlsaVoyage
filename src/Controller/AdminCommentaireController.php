@@ -33,6 +33,7 @@ final class AdminCommentaireController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $commentaire = new Commentaire();
+        $commentaire->setDateHeureCreation(new \DateTime('now'));
         $form = $this->createForm(CommentaireForm::class, $commentaire);
         $form->handleRequest($request);
         $user = $this->getUser();
