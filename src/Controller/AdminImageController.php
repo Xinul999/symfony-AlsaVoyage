@@ -125,8 +125,13 @@ final class AdminImageController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
         if ($this->isCsrfTokenValid('delete' . $image->getId(), $request->getPayload()->getString('_token'))) {
+            $filesystem = new Filesystem();
+            if ($image->getChemin() && $filesystem->exists($image->getChemin())) {
+                $filesystem->remove($image->getChemin());
+            }
             $entityManager->remove($image);
             $entityManager->flush();
+
         }
 
         return $this->redirectToRoute('app_admin_image_index', [], Response::HTTP_SEE_OTHER);

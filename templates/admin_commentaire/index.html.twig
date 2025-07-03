@@ -3,6 +3,7 @@
 {% block title %}Commentaire index{% endblock %}
 
 {% block body %}
+    <div class="m-2">
     <h1>Commentaire index</h1>
 
     <table class="table">
@@ -36,5 +37,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_admin_commentaire_new') }}">Create new</a>
+    <a href="{{ path('app_admin_commentaire_new') }}" class="py-2 px-4 bg-dark text-white text-decoration-none rounded-4">Create new</a>
+    </div>
 {% endblock %}
