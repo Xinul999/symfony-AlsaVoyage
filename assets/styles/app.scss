@@ -125,7 +125,7 @@ header{
             display: block;
             border-top-left-radius: 12px;
             border-top-right-radius: 12px;
-            height: auto;
+            max-height: 216px;
             pointer-events: none;
             transition: all $slider-transition-time ease-out;
             object-fit: cover;
