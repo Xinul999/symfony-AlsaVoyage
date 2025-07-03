@@ -7,6 +7,10 @@ use App\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Entity\Commentaire;
+use App\Form\CommentaireForm;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 final class HomeController extends AbstractController
 {
@@ -29,11 +33,26 @@ final class HomeController extends AbstractController
 
     }
 
-    #[Route('/postList/{id}', name: 'app_postList_show', methods: ['GET'])]
-    public function show(Post $post): Response
+    #[Route('/postList/{id}', name: 'app_postList_show', methods: ['GET', 'POST'])]
+    public function show(Post $post, Request $request, EntityManagerInterface $em): Response
     {
+        $commentaire = new Commentaire();
+        $form = $this->createForm(CommentaireForm::class, $commentaire);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $commentaire->setAuteur($this->getUser());
+            $commentaire->setPost($post);
+
+
+            $em->persist($commentaire);
+            $em->flush();
+
+            return $this->redirectToRoute('app_postList_show', ['id' => $post->getId()]);
+        }
         return $this->render('home/post.html.twig', [
             'post' => $post,
+            'commentaire_form' => $form->createView(),
         ]);
     }
 

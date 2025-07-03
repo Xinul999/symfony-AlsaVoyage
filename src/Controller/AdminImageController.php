@@ -18,6 +18,11 @@ final class AdminImageController extends AbstractController
     #[Route(name: 'app_admin_image_index', methods: ['GET'])]
     public function index(ImageRepository $imageRepository): Response
     {
+
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
         return $this->render('admin_image/index.html.twig', [
             'images' => $imageRepository->findAll(),
         ]);

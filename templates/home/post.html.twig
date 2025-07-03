@@ -1,32 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des articles{% endblock %}
+{% block title %}{{ post.titre }}{% endblock %}
 
 {% block body %}
-    <section class="article">
-        <h1>{{ post.titre }}</h1>
-        <p>Article de : <b>{{ post.auteur.username }}</b></p>
-        <p>{{ post.contenu }}</p>
-        <div class="commentaires">
-            <h2>Commentaires</h2>
-            {% for post in posts %}
-            <li>
-                <article id='{{ post.id }}'>
-                    <h2>{{ post.titre }}</h2>
-                    <p>{{ post.contenu }}</p>
-                    <p>
-                        <time datetime="{{ post.dateHeureCreation ? post.dateHeureCreation|date('Y-m-d H:i:s') : ''}}"> {{ post.dateHeureCreation ? post.dateHeureCreation|date('D d M Y') : ''}}</time>
-                    </p>
-                    <a href="{{ path('app_postList_show', {'id': post.id}) }}">Lire l'article en entier</a>
-                </article>
-            </li>
-            {% else %}
-            <li><h2>Pas d'articles enregistrés</h2></li>
+<section class="article">
+    <h1>{{ post.titre }}</h1>
+    <p><strong>Auteur :</strong> {{ post.auteur.username }}</p>
+    <p>{{ post.contenu }}</p>
+    <p>
+        <small>
+            Publié le {{ post.dateHeureCreation|date('d/m/Y à H:i') }}
+        </small>
+    </p>
+
+    <hr>
+
+    <h2>Commentaires</h2>
+    {% if post.commentaires is not empty %}
+        <ul>
+            {% for commentaire in post.commentaires %}
+                <li>
+                    <p><strong>{{ commentaire.auteur.username }}</strong> le {{ commentaire.dateHeureCreation|date('d/m/Y H:i') }}</p>
+                    <p>{{ commentaire.contenu }}</p>
+                </li>
             {% endfor %}
-        </div>
-    </section>
+        </ul>
+    {% else %}
+        <p>Aucun commentaire pour l’instant.</p>
+    {% endif %}
 
-    <p>{{ dump(post) }}</p>
+    <hr>
 
-
+    <h2>Laisser un commentaire</h2>
+    {% if app.user %}
+        {{ form_start(commentaire_form) }}
+            {{ form_row(commentaire_form.contenu) }}
+            {{ form_row(commentaire_form.submit) }}
+        {{ form_end(commentaire_form) }}
+    {% else %}
+        <p>Vous devez <a href="{{ path('app_login') }}">vous connecter</a> pour commenter.</p>
+    {% endif %}
+</section>
 {% endblock %}
