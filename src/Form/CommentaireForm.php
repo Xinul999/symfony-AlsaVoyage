@@ -22,14 +22,6 @@ class CommentaireForm extends AbstractType
             ->add('contenu', TextareaType::class ,[
                 'label' => 'Contenu du commentaire'
             ])
-            /*->add('auteur', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'username',
-            ])
-            ->add('post', EntityType::class, [
-                'class' => Post::class,
-                'choice_label' => 'titre',
-            ])*/
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => ['class' => 'btn btn-primary btn-block']

@@ -11,6 +11,7 @@ $header-size: 10px;
     margin: 0;
     padding: 0;
 }
+
 header{
     li{
         position: relative;
@@ -314,3 +315,31 @@ form {
     background-color: white;
 }
 
+.list-decalage > li{
+    margin-left:10px;
+}
+
+p{
+    margin-bottom:0px;
+}
+
+.survol{
+    position:relative;
+}
+
+.survol ul{
+    display:none;
+}
+
+.survol:hover{
+
+    ul{
+        display: block;
+        position:absolute;
+        width:200px;
+    }
+}
+
+header{
+    margin-bottom:100px;
+}

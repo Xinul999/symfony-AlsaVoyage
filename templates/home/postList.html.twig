@@ -50,7 +50,6 @@
                 <!-- Gestion du post avec tous les commentaire -> app_postList_show -->
                 <div class="d-flex justify-content-between">
                     <a href="{{ path('app_postList_show', {'id': post.id}) }}">Lire l'article en entier</a>
-                    <a href="{{ path('app_admin_commentaire_new', {'id': post.id}) }}">Ajouter un commentaire</a>
                     <a href="{{ path('app_admin_image_new') }}?postId={{ post.id }}">Ajouter une image</a>
                 </div>
 
