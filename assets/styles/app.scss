@@ -157,6 +157,19 @@ header{
 
 }
 
+@media screen and (max-width: 1280px)  {
+    .slider {
+        .perspective{
+            figure{
+                img {
+                    height: 150px;
+                }
+
+            }
+        }
+
+    }
+}
 @media screen and (max-width: 1050px) {
     .slider{
         grid-template-columns: 1fr;
