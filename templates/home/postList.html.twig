@@ -30,7 +30,7 @@
         .post-article:hover {
             background-color: rgba(255, 255, 255, 1);
         }
-        .post-article:hover a {
+        .post-article a:hover {
             color: #333;
         }
     </style>
@@ -48,14 +48,18 @@
                     <time datetime="{{ post.dateHeureCreation ? post.dateHeureCreation|date('Y-m-d H:i:s') : ''}}"> {{ post.dateHeureCreation ? post.dateHeureCreation|date('D d M Y') : ''}}</time>
                 </p>
                 <!-- Gestion du post avec tous les commentaire -> app_postList_show -->
-                <a href="{{ path('app_postList_show', {'id': post.id}) }}">Lire l'article en entier</a>
-                <a href="{{ path('app_admin_commentaire_new', {'id': post.id}) }}">Ajouter un commentaire</a>
+                <div class="d-flex justify-content-between">
+                    <a href="{{ path('app_postList_show', {'id': post.id}) }}">Lire l'article en entier</a>
+                    <a href="{{ path('app_admin_commentaire_new', {'id': post.id}) }}">Ajouter un commentaire</a>
+                    <a href="{{ path('app_admin_image_new') }}?postId={{ post.id }}">Ajouter une image</a>
+                </div>
+
             </article>
         </li>
         {% else %}
         <li><h2>Pas d'articles enregistrés</h2></li>
         {% endfor %}
     </ul>
-    <a href="{{ path('app_admin_post_new') }}">Rédiger un nouvel article</a>
+    <a href="{{ path('app_admin_post_new') }}" class="py-2 px-4 bg-dark text-white text-decoration-none rounded-4">Rédiger un nouvel article</a>
 </div>
 {% endblock %}
