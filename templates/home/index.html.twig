@@ -2,55 +2,43 @@
 
 {% block title %}Accueil - Blog de Bob le voyageur{% endblock %}
 
-{%  block body %}
-        <h1 class="text-center text-black opacity-75">Blog de Bob le voyageur</h1>
-        <div class="slider">
-            {% if posts is not empty %}
-                {% for post in posts %}
-                    <article class="perspective">
-                        <div class="side{{ loop.index0 }}">
-                            <figure>
-                                <h2>{{ post.titre }}</h2>
-                                {% if post.images is not empty %}
-                                    <img src="{{ asset(post.images.first.chemin) }}" width="620" height="465" alt="{{ post.titre }}">
-                                {% else %}
-                                    <img src="{{ asset('images/placeholder.jpg') }}" width="620" height="465" alt="placeholder">
-                                {% endif %}
-                            </figure>
-                            <footer class="contenu scroll-bar">
-                                <h3>{{ post.dateHeureCreation|date('d/m/Y') }}</h3>
-                                <p>{{ post.contenu|striptags|slice(0, 140) }}...</p>
-                                <!-- creation d'un lien pour voir le post -->
-                            </footer>
-                        </div>
-                    </article>
-                {% endfor %}
-            {% else %}
-                <!-- affichage d'un message d'erreur si aucun article n'est disponible -->
-                <article class="perspective">
-                    <div class="side0">
+{% block body %}
+    <h1 class="text-center text-black opacity-75">Blog de Bob le voyageur</h1>
+    <div class="slider">
+        {% set maxSlides = 3 %}
+        {% set postCount = posts|length %}
+
+        {% for i in 0..(maxSlides - 1) %}
+            <article class="perspective">
+                <div class="side{{ i }}">
+                    {% if i < postCount %}
+                        {# Post réel #}
+                        {% set post = posts[i] %}
                         <figure>
-                            <h2>Aucun article disponible</h2>
-                            <img src="{{ asset('images/placeholder.jpg') }}" width="620" height="465" alt="Aucun contenu disponible">
+                            <h2>{{ post.titre }}</h2>
+                            {% if post.images is not empty %}
+                                <img src="{{ asset(post.images.first.chemin) }}" width="620" height="465" alt="{{ post.titre }}">
+                            {% else %}
+                                <img src="{{ asset('images/placeholder.jpg') }}" width="620" height="465" alt="placeholder">
+                            {% endif %}
                         </figure>
-                    </div>
-                </article>
-                <article class="perspective">
-                    <div class="side1">
+                        <footer class="contenu scroll-bar">
+                            <h3>{{ post.dateHeureCreation|date('d/m/Y') }}</h3>
+                            <p>{{ post.contenu|striptags|slice(0, 140) }}...</p>
+                        </footer>
+                    {% else %}
+                        {# Placeholder #}
                         <figure>
-                            <h2>Aucun article disponible</h2>
-                            <img src="{{ asset('images/placeholder.jpg') }}" width="620" height="465" alt="Aucun contenu disponible">
+                            <h2>Bientôt disponible</h2>
+                            <img src="{{ asset('images/placeholder.jpg') }}" width="620" height="465" alt="Contenu à venir">
                         </figure>
-                    </div>
-                </article>
-                <article class="perspective">
-                    <div class="side2">
-                        <figure>
-                            <h2>Aucun article disponible</h2>
-                            <img src="{{ asset('images/placeholder.jpg') }}" width="620" height="465" alt="Aucun contenu disponible">
-                        </figure>
-                    </div>
-                </article>
-            {% endif %}
-        </div>
+                        <footer class="contenu scroll-bar">
+                            <h3>Prochainement</h3>
+                            <p>De nouveaux articles arrivent bientôt...</p>
+                        </footer>
+                    {% endif %}
+                </div>
+            </article>
+        {% endfor %}
+    </div>
 {% endblock %}
